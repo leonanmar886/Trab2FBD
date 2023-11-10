@@ -1,5 +1,4 @@
 import psycopg2
-import os
 from dbConfig import db_config
 
 def get_db_connection():
