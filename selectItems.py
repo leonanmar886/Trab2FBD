@@ -1,8 +1,5 @@
-from dbConnection import get_db_connection
 from prettytable import PrettyTable
-
-conn = get_db_connection()
-context = conn.cursor()
+from createTable import conn, context
 
 
 def select_boats_and_crew():
@@ -22,5 +19,34 @@ def select_boats_and_crew():
             table.add_row(row)
 
         print(table)
+##---------------------------------------------------------------------------------------
+
+        context.execute("""
+            SELECT * AS dadosEmpregados
+            FROM Empregados e
+            WHERE e.id_emp IN (SELECT me.id_emp FROM Movimentacoes_Empregados me INNER JOIN Movimentacoes m ON m.id_mov=me.id_mov WHERE m.id_mov = 1 )
+        """)
+        result1 = context.fetchall()
+
+        table1 = PrettyTable(['dadosEmpregados'])
+        for row in result1:
+            table.add_row(row)
+
+        print(table1)
+
+##---------------------------------------------------------------------------------------
+        context.execute("""
+                SELECT COUNT(m.id_emb) AS quantEmbarcacoes
+                FROM Embarcacoes e INNER JOIN Movimentacao m
+                ON m.id_emb = e.id_emb WHERE e.tipo = 'Cargueiro'
+            """)
+        result2 = context.fetchall()
+
+        table2 = PrettyTable(['quantEmbarcacoes'])
+        for row in result2:
+            table.add_row(row)
+
+        print(table2)
+
         context.close()
         conn.close()
