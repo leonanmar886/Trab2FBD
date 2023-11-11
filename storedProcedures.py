@@ -1,14 +1,14 @@
 from prettytable import PrettyTable
 
-def employer_of_month(conn):
-    conn.execute("""
-        CREATE OR REPLACE PROCEDURE employer_of_month(
+def employer_of_month(conn, context):
+    context.execute("""
+        CREATE OR REPLACE FUNCTION employer_of_month(
             date DATE
-        )
-        LANGUAGE PLPGSQL
+        ) RETURNS TABLE (id_emp INT, nome VARCHAR(255))
         AS $$
         BEGIN
-            SELECT id_emp, nome
+            RETURN QUERY
+            SELECT sub.id_emp, sub.nome
             FROM
                 (
                     SELECT
@@ -42,14 +42,14 @@ def employer_of_month(conn):
                 GROUP BY me.id_emp, e.nome
                 ) AS sub
             WHERE
-                rankMov = 1;
-        END;$$
+                sub.rankMov = 1;
+        END;$$ LANGUAGE plpgsql;
 
     """)
     conn.commit()
 
 def execute_employer_of_month(context,date):
-    context.execute("CALL employer_of_month(%s)", (date))
+    context.execute("SELECT * FROM employer_of_month(%s)", (date,))
     result = context.fetchone()
 
     table = PrettyTable(['id_emp', 'nome'])
