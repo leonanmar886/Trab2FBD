@@ -1,3 +1,5 @@
+from prettytable import PrettyTable
+
 def employer_of_month(conn):
     conn.execute("""
         CREATE OR REPLACE PROCEDURE employer_of_month(
@@ -45,3 +47,11 @@ def employer_of_month(conn):
 
     """)
     conn.commit()
+
+def execute_employer_of_month(context,date):
+    context.execute("CALL employer_of_month(%s)", (date))
+    result = context.fetchone()
+
+    table = PrettyTable(['id_emp', 'nome'])
+    table.add_row(result)
+    print(table)
