@@ -1,7 +1,7 @@
 from prettytable import PrettyTable
 
 def insert_move(conn, context):
-    context.execute("INSERT INTO Movimentacoes VALUES(%s,%s,%s,%s)",(6,'2023-10-05','Manutenção', '1'))
+    context.execute("INSERT INTO Movimentacoes VALUES(%s,%s,%s,%s)",(6,'2023-10-05','Manutenção', 1))
     conn.commit()
 
 def insert_move_employe(conn, context):
