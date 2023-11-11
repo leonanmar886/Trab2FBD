@@ -3,7 +3,7 @@ import insertItems
 import selectItems
 import transactions
 
-from dbConfig import conn, context
+from dbConnection import conn, context
 
 #2.2 Criação de Tabelas
 createTable.createTable(conn, context)
