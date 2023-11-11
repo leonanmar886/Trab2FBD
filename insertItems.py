@@ -12,6 +12,12 @@ def insert_items(conn, context):
     context.execute("INSERT INTO Tripulantes VALUES(%s,%s,%s,%s,%s)",(5,'Tripulante5','1991-07-10', 'Capitão', 4))
     context.execute("INSERT INTO Tripulantes VALUES(%s,%s,%s,%s,%s)",(6,'Tripulante6','1994-09-25', 'Engenheiro', 4))
 
+    context.execute("INSERT INTO Empregados VALUES(%s, %s, %s, %s)",(1,'Empregado1','1985-05-12','Manutenção'))
+    context.execute("INSERT INTO Empregados VALUES(%s, %s, %s, %s)",(2,'Empregado2','1993-02-28','Segurança'))
+    context.execute("INSERT INTO Empregados VALUES(%s, %s, %s, %s)",(3,'Empregado3','1987-09-18','Logistica'))
+    context.execute("INSERT INTO Empregados VALUES(%s, %s, %s, %s)",(4,'Empregado4','1990-12-05','Limpeza'))
+    context.execute("INSERT INTO Empregados VALUES(%s, %s, %s, %s)",(5,'Empregado5','2001-08-30','Manutenção'))
+
     context.execute("INSERT INTO Movimentacoes VALUES(%s,%s,%s,%s)",(1,'2023-09-01','Carga', '1'))
     context.execute("INSERT INTO Movimentacoes VALUES(%s,%s,%s,%s)",(2,'2023-09-02','Embarque de Passageiros', '2'))
     context.execute("INSERT INTO Movimentacoes VALUES(%s,%s,%s,%s)",(3,'2023-10-03','Abastecimento', '3'))
