@@ -1,14 +1,4 @@
-import psycopg2
-from dbConfig import db_config
-
-conn = psycopg2.connect(
-        dbname=db_config['dbname'],
-        user=db_config['user'],
-        host=db_config['host'],
-        password=db_config['password'])
-
-try:
-    context = conn.cursor()
+def createTable(conn, context):
     context.execute("""
                     DROP TABLE IF EXISTS Embarcacoes CASCADE;
                     CREATE TABLE Embarcacoes (
@@ -51,9 +41,3 @@ try:
 
                     """)
     conn.commit()
-    context.close()
-except psycopg2.DatabaseError as error:
-    print(error)
-finally:
-    if context is not None:
-        conn.close()  

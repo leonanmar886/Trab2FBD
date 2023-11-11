@@ -1,8 +1,7 @@
 from prettytable import PrettyTable
-from createTable import conn, context
 
 
-def select_boats_and_crew():
+def select_boats_and_crew(context):
         """
     Utilizamos a cláusula LEFT JOIN para incluir todas as embarcações, mesmo aquelas que não têm tripulantes.
     """
@@ -49,4 +48,3 @@ def select_boats_and_crew():
         print(table2)
 
         context.close()
-        conn.close()
