@@ -2,6 +2,7 @@ import createTable
 import insertItems
 import selectItems
 import transactions
+import storedProcedures
 
 from dbConnection import conn, context
 
@@ -20,6 +21,9 @@ selectItems.select_boats(context)
 transactions.insert_move(conn, context)
 transactions.insert_move_employe(conn, context)
 transactions.select_qtd_moves(context)
+
+#2.6 Procedimentos Armazenados
+storedProcedures.employer_of_month(conn)
 
 context.close()
 conn.close()
