@@ -20,3 +20,6 @@ selectItems.select_boats(context)
 transactions.insert_move(conn, context)
 transactions.insert_move_employe(conn, context)
 transactions.select_qtd_moves(context)
+
+context.close()
+conn.close()
