@@ -1,4 +1,7 @@
-def createTable(conn, context):
+from dbConnection import connect, disconnect
+
+def createTable():
+    conn, context = connect()
     context.execute("""
                     DROP TABLE IF EXISTS Embarcacoes CASCADE;
                     CREATE TABLE Embarcacoes (
@@ -41,3 +44,4 @@ def createTable(conn, context):
 
                     """)
     conn.commit()
+    disconnect(conn, context)

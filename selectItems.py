@@ -1,7 +1,8 @@
 from prettytable import PrettyTable
+from dbConnection import connect, disconnect
 
-
-def select_boats_and_crew(context):
+def select_boats_and_crew():
+    conn, context = connect()
     """
 Utilizamos a cláusula LEFT JOIN para incluir todas as embarcações, mesmo aquelas que não têm tripulantes.
 """
@@ -18,8 +19,12 @@ Utilizamos a cláusula LEFT JOIN para incluir todas as embarcações, mesmo aque
         table.add_row(row)
 
     print(table)
+    
+    disconnect(conn, context)
 
-def select_employes(context):
+def select_employes():
+    conn, context = connect()
+
     context.execute("""
         SELECT * FROM Empregados e
         WHERE e.id_emp IN (SELECT me.id_emp FROM Movimentacoes_Empregados me INNER JOIN Movimentacoes m ON m.id_mov=me.id_mov WHERE m.id_mov = 1 )
@@ -32,7 +37,11 @@ def select_employes(context):
 
     print(table)
 
-def select_boats(context):
+    disconnect(conn, context)
+
+def select_boats():
+    conn, context = connect()
+
     context.execute("""
             SELECT COUNT(m.id_emb) AS qtdEmbarcacoes
             FROM Embarcacoes e 
@@ -46,3 +55,5 @@ def select_boats(context):
         table.add_row(row)
 
     print(table)
+
+    disconnect(conn, context)

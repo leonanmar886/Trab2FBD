@@ -1,4 +1,7 @@
-def insert_items(conn, context):
+from dbConnection import connect, disconnect
+
+def insert_items():
+    conn, context = connect()
 
     context.execute("INSERT INTO Embarcacoes VALUES(%s,%s,%s)",(1,'Navio1','Cargueiro'))
     context.execute("INSERT INTO Embarcacoes VALUES(%s,%s,%s)",(2,'Navio2','Passageiro'))
@@ -34,3 +37,5 @@ def insert_items(conn, context):
     context.execute("INSERT INTO Movimentacoes_Empregados VALUES(%s,%s)",(5,1))
 
     conn.commit()
+
+    disconnect(conn, context)

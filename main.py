@@ -4,27 +4,22 @@ import selectItems
 import transactions
 import storedProcedures
 
-from dbConnection import conn, context
-
 #2.2 Criação de Tabelas
-createTable.createTable(conn, context)
+createTable.createTable()
 
 #2.3 Inserção de Dados
-insertItems.insert_items(conn, context)
+insertItems.insert_items()
 
 # 2.4 Consulta
-selectItems.select_boats_and_crew(context)
-selectItems.select_employes(context)
-selectItems.select_boats(context)
+selectItems.select_boats_and_crew()
+selectItems.select_employes()
+selectItems.select_boats()
 
 # 2.5 Transações
-transactions.insert_move(conn, context)
-transactions.insert_move_employe(conn, context)
-transactions.select_qtd_moves(context)
+transactions.insert_move()
+transactions.insert_move_employe()
+transactions.select_qtd_moves()
 
 #2.6 Procedimentos Armazenados
-storedProcedures.employer_of_month(conn, context)
-storedProcedures.execute_employer_of_month(context, '2023-10-21')
-
-context.close()
-conn.close()
+storedProcedures.employer_of_month()
+storedProcedures.execute_employer_of_month('2023-10-21')

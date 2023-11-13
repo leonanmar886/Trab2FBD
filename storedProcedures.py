@@ -1,6 +1,9 @@
 from prettytable import PrettyTable
+from dbConnection import connect, disconnect
 
-def employer_of_month(conn, context):
+def employer_of_month():
+    conn, context = connect()
+
     context.execute("""
         CREATE OR REPLACE FUNCTION employer_of_month(
             date DATE
@@ -48,10 +51,16 @@ def employer_of_month(conn, context):
     """)
     conn.commit()
 
-def execute_employer_of_month(context,date):
+    disconnect(conn, context)
+
+def execute_employer_of_month(date):
+    conn, context = connect()
+
     context.execute("SELECT * FROM employer_of_month(%s)", (date,))
     result = context.fetchone()
 
     table = PrettyTable(['id_emp', 'nome'])
     table.add_row(result)
     print(table)
+
+    disconnect(conn, context)
