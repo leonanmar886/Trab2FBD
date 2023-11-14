@@ -40,7 +40,7 @@ context.execute("""
                     FROM Movimentacao mov
                     WHERE mov.id_mov = NEW.id_mov;
 
-                    IF tipo_movimentacao = 'Manutenção' AND funcao_empregado <> 'Manutenção' THEN
+                    IF tipo_movimentacao = 'Manutenção' AND funcao_empregado != 'Manutenção' THEN
                     RAISE EXCEPTION 'Somente empregados da manutenção podem ser escolhidos para executar movimentações desse tipo';
                     END IF;
                     RETURN NEW;
