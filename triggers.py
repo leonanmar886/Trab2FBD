@@ -8,13 +8,13 @@ def create_capitan_trigger():
                     RETURNS TRIGGER AS $$
                     BEGIN
                         IF TG_OP = 'INSERT' THEN
-                            IF (SELECT COUNT(*) FROM tripulante WHERE funcao = 'Capitão') > 0 THEN
-                                RAISE EXCEPTION 'Já existe um Capitão na tripulação!';
+                            IF (SELECT COUNT(*) FROM tripulantes WHERE funcao = 'Capitão' AND id_emb = NEW.id_emb) > 0 THEN
+                                RAISE EXCEPTION 'Já existe um Capitão na tripulação desta embarcação!';
                             END IF;
                         ELSIF TG_OP = 'UPDATE' THEN
                             IF OLD.funcao <> NEW.funcao THEN
-                                IF NEW.funcao = 'Capitão' AND (SELECT COUNT(*) FROM tripulante WHERE funcao = 'Capitão') > 1 THEN
-                                    RAISE EXCEPTION 'Apenas um Tripulante pode ter a função de Capitão!';
+                                IF NEW.funcao = 'Capitão' AND (SELECT COUNT(*) FROM tripulante WHERE funcao = 'Capitão' AND id_emb = NEW.id_emb) > 1 THEN
+                                    RAISE EXCEPTION 'Apenas um Tripulante por embarcação pode ter a função de Capitão!';
                                 END IF;
                             END IF;
                         END IF;
@@ -57,7 +57,7 @@ def create_move_trigger():
                     $$ LANGUAGE plpgsql;
 
                     CREATE TRIGGER restringe_mov_empregados
-                    BEFORE INSERT ON movimentacao_empregados
+                    BEFORE INSERT ON movimentacoes_empregados
                     FOR EACH ROW
                     EXECUTE FUNCTION restringe_mov();
     """)
@@ -76,3 +76,18 @@ def test_move_trigger():
     conn.commit()
     disconnect(conn, context)
 
+def test_capitan_trigger():
+    conn, context = connect()
+
+    context.execute("""
+            INSERT INTO Tripulantes VALUES(%s,%s,%s,%s,%s);
+            INSERT INTO Tripulantes VALUES(%s,%s,%s,%s,%s);
+                        
+            UPDATE Tripulantes SET funcao = %s WHERE id_trp = %s;
+        """,
+            (7,'Tripulante7','1980-09-04','Capitão',4,
+            8,'Tripulante8','1985-03-03','Capitão',2,
+            'Capitão', 3))
+
+    conn.commit()
+    disconnect(conn, context)
