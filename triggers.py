@@ -1,6 +1,6 @@
 from dbConnection import connect, disconnect
 
-def create_capitan_trigger():
+def create_capitain_trigger():
     conn, context = connect()
 
     context.execute("""
@@ -13,7 +13,7 @@ def create_capitan_trigger():
                             END IF;
                         ELSIF TG_OP = 'UPDATE' THEN
                             IF OLD.funcao <> NEW.funcao THEN
-                                IF NEW.funcao = 'Capitão' AND (SELECT COUNT(*) FROM tripulante WHERE funcao = 'Capitão' AND id_emb = NEW.id_emb) > 1 THEN
+                                IF NEW.funcao = 'Capitão' AND (SELECT COUNT(*) FROM tripulantes WHERE funcao = 'Capitão' AND id_emb = NEW.id_emb) > 1 THEN
                                     RAISE EXCEPTION 'Apenas um Tripulante por embarcação pode ter a função de Capitão!';
                                 END IF;
                             END IF;
@@ -24,7 +24,7 @@ def create_capitan_trigger():
                     $$ LANGUAGE plpgsql;
 
                     CREATE TRIGGER trigger_valida_tripulante_capitao
-                    BEFORE INSERT OR UPDATE ON tripulante
+                    BEFORE INSERT OR UPDATE ON tripulantes
                     FOR EACH ROW
                     EXECUTE FUNCTION valida_tripulante_capitao();""")
     conn.commit()
