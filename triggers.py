@@ -65,3 +65,14 @@ def create_move_trigger():
     conn.commit()
     disconnect(conn, context)
 
+def test_move_trigger():
+    conn, context = connect()
+
+    context.execute("""
+        INSERT INTO Movimentacoes_Empregados VALUES(%s,%s);
+        INSERT INTO Movimentacoes_Empregados VALUES(%s,%s);
+    """, (5,5,5,2))
+
+    conn.commit()
+    disconnect(conn, context)
+
