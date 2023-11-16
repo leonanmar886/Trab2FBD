@@ -3,6 +3,7 @@ import insertItems
 import selectItems
 import transactions
 import storedProcedures
+import triggers
 
 #2.2 Criação de Tabelas
 createTable.createTable()
@@ -23,3 +24,9 @@ transactions.select_qtd_moves()
 #2.6 Procedimentos Armazenados
 storedProcedures.employer_of_month()
 storedProcedures.execute_employer_of_month('2023-10-21')
+
+#2.7 Gatilhos
+triggers.create_capitain_trigger()
+triggers.create_move_trigger()
+triggers.test_capitan_trigger()
+triggers.test_move_trigger()
