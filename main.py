@@ -28,3 +28,5 @@ storedProcedures.execute_employer_of_month('2023-10-21')
 #2.7 Gatilhos
 triggers.create_capitain_trigger()
 triggers.create_move_trigger()
+triggers.test_capitan_trigger()
+triggers.test_move_trigger()
